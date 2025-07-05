@@ -65,24 +65,27 @@
 
 
     <!-- Key Contributions with Fig.1 -->
-    <section id="contributions">
-      <h2>Key Contributions</h2>
-      <ol>
-        <li>
-          <strong>Orthogonal Prompt Regularizer:</strong>
-          Add ∥E Eᵀ − I∥₂² to the TPT loss to enforce angular separation among text prompts.
-        </li>
-        <li>
-          <strong>Comprehensive Evaluation:</strong>
-          11 datasets (ImageNet, fine-grained, OOD variants), CLIP ViT-B/16 & RN50 backbones.
-        </li>
-        <li>
-          <strong>SOTA Calibration:</strong>
-          O-TPT achieves 4.21% ECE vs. 5.13% (C-TPT) and 12.0% (TPT) on fine-grained tasks.  
-          <img src="assets/images/radar_plot_3.png" alt="ECE comparison plot"> <!-- Fig.1 :contentReference[oaicite:11]{index=11} -->
-        </li>
-      </ol>
-    </section>
+   <section id="contributions">
+  <h2>Key Contributions</h2>
+  <ol>
+    <li>
+      <strong>Orthogonal Prompt Regularizer:</strong>
+      Add ∥E Eᵀ − I∥₂² to the TPT loss to enforce angular separation among text prompts.
+    </li>
+    <li>
+      <strong>Comprehensive Evaluation:</strong>
+      11 datasets (ImageNet, fine-grained, OOD variants), CLIP ViT-B/16 & RN50 backbones.
+    </li>
+    <li>
+      <strong>SOTA Calibration:</strong>
+      O-TPT achieves 4.21% ECE vs. 5.13% (C-TPT) and 12.0% (TPT) on fine-grained tasks.
+      <figure>
+        <img src="assets/images/radar_plot_3.png" alt="ECE comparison plot">
+        <figcaption>Fig.1: ECE vs. baselines</figcaption>
+      </figure>
+    </li>
+  </ol>
+</section>
 
     <!-- Methodology with Fig.3 -->
     <section id="methodology">
