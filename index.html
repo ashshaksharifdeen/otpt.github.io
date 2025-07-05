@@ -3,95 +3,130 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>O-TPT: Orthogonality-Constrained TPT</title>
+  <title>O-TPT: Orthogonality-Constrained Test-time Prompt Tuning</title>
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
-  <header>
-    <h1>O-TPT</h1>
-    <p><em>Orthogonality Constraints for Calibrating Test-time Prompt Tuning in Vision-Language Models</em></p>
+  <!-- Hero header with gradient background -->
+  <header class="hero">
+    <div class="hero-content">
+      <h1>O-TPT</h1>
+      <p class="subtitle">
+        Orthogonality Constraints for Calibrating Test-time Prompt Tuning<br>
+        in Vision-Language Models
+      </p>
+      <div class="links">
+        <a href="https://openaccess.thecvf.com/content/CVPR2025/papers/Sharifdeen_O-TPT_Orthogonality_Constraints_for_Calibrating_Test-time_Prompt_Tuning_in_Vision-Language_CVPR_2025_paper.pdf" target="_blank">Paper (CVPR ’25)</a>
+        <a href="https://github.com/ashshaksharifdeen/O-TPT" target="_blank">Code</a>
+        <a href="https://docs.google.com/presentation/d/1aRIgcdLnAUOojj45v39bugMX2F2aYLpY/edit" target="_blank">Slides</a>
+      </div>
+    </div>
   </header>
 
-  <section id="video">
-    <h2>Overview Video</h2>
-    <div class="video-container">
-      <iframe
-        src="https://www.youtube.com/embed/zBh-tCqpGUE"
-        frameborder="0" allowfullscreen>
-      </iframe>
-    </div>
-  </section>
+  <main>
+    <!-- Overview -->
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>
+        Test-time prompt tuning (TPT) can boost CLIP-style models’ accuracy on new tasks without labels, but often at the cost of over-confident, mis-calibrated predictions.
+        O-TPT introduces an orthogonality regularizer on class-prompt embeddings, enforcing them to span the unit hypersphere with low cosine similarity—improving calibration across benchmarks.
+      </p>
+    </section>
 
-  <section id="overview">
-    <h2>Project Overview</h2>
-    <p>
-      Vision-language models suffer from mis-calibration when you fine-tune prompts at test time.
-      O-TPT enforces mutual orthogonality among class-prompt embeddings, yielding both high accuracy
-      and well-calibrated confidences.
-    </p>
-  </section>
+    <!-- Authors & Affiliations -->
+    <section id="authors">
+      <h2>Authors & Affiliations</h2>
+      <ul>
+        <li>Ashshak Sharifdeen¹²</li>
+        <li>Muhammad Akhtar Munir¹</li>
+        <li>Sanoojan Baliah¹</li>
+        <li>Salman Khan¹³</li>
+        <li>Muhammad Haris Khan¹</li>
+      </ul>
+      <p class="affiliations">
+        ¹Mohamed Bin Zayed University of AI<br>
+        ²University of Colombo<br>
+        ³Australian National University
+      </p>
+    </section>
 
-  <section id="authors">
-    <h2>Authors & Affiliations</h2>
-    <ul>
-      <li>Your Name, University of Colombo</li>
-      <li>Co-author A, Affiliation</li>
-      <!-- add others as needed -->
-    </ul>
-  </section>
+    <!-- Key Contributions with Fig.1 -->
+    <section id="contributions">
+      <h2>Key Contributions</h2>
+      <ol>
+        <li>
+          <strong>Orthogonal Prompt Regularizer:</strong>
+          Add ∥E Eᵀ − I∥₂² to the TPT loss to enforce angular separation among text prompts.
+        </li>
+        <li>
+          <strong>Comprehensive Evaluation:</strong>
+          11 datasets (ImageNet, fine-grained, OOD variants), CLIP ViT-B/16 & RN50 backbones.
+        </li>
+        <li>
+          <strong>SOTA Calibration:</strong>
+          O-TPT achieves 4.21% ECE vs. 5.13% (C-TPT) and 12.0% (TPT) on fine-grained tasks.  
+          <img src="assets/images/radar_plot_3.png" alt="ECE comparison plot"> <!-- Fig.1 :contentReference[oaicite:11]{index=11} -->
+        </li>
+      </ol>
+    </section>
 
-  <section id="contributions">
-    <h2>Key Contributions</h2>
-    <ol>
-      <li>
-        <strong>Orthogonality Regularization:</strong>
-        Add a term <code>∥E Eᵀ−I∥₂²</code> to the prompt-tuning loss to enforce angular separation.
-      </li>
-      <li>
-        <strong>Comprehensive Benchmarks:</strong>
-        Evaluate on 11 datasets (ImageNet, Fine-grained, OOD variants) with CLIP ViT-B/16 & RN50.
-      </li>
-      <li>
-        <strong>State-of-the-Art Calibration:</strong>
-        Achieve 4.21% ECE (vs. 5.13% C-TPT, 12.0% TPT) without sacrificing accuracy.
-      </li>
-    </ol>
-  </section>
+    <!-- Methodology with Fig.3 -->
+    <section id="methodology">
+      <h2>Methodology</h2>
+      <p>
+        Let <code>E∈ℝ^{C×D}</code> be the matrix of class-prompt embeddings. We optimize:
+      </p>
+      <pre><code>
+minₜ L_{TPT}(t) + λ · ∥E Eᵀ − I_C∥₂²
+      </code></pre>
+      <p>where L_{TPT} is the entropy-minimization loss of TPT.</p>
+      <figure>
+        <img src="assets/images/CTPT_vs_ours_diag.png" alt="Orthogonal vs. dispersion comparison">
+        <figcaption>Fig. 3: Orthogonal vs. L₂-dispersion (C-TPT) :contentReference[oaicite:12]{index=12}</figcaption>
+      </figure>
+    </section>
 
-  <section id="methodology">
-    <h2>Methodology</h2>
-    <p>
-      Let <code>E∈ℝ^{C×D}</code> be your matrix of class-prompt embeddings.  We optimize:
-    </p>
-    <pre><code>
-minₜ Lₜₚₜ + λ ⋅ ∥E Eᵀ − I_C∥₂²
-    </code></pre>
-    <p>…where <code>Lₜₚₜ</code> is the standard test-time prompt-tuning loss.</p>
-  </section>
+    <!-- Results with Fig.5 -->
+    <section id="results">
+      <h2>Results</h2>
+      <p>
+        Across fine-grained datasets, O-TPT consistently lowers ECE without sacrificing accuracy:
+      </p>
+      <figure>
+        <img src="assets/images/various-method2.png" alt="Fine-grained datasets ECE">
+        <figcaption>Fig. 5: ECE across fine-grained tasks (average) :contentReference[oaicite:13]{index=13}</figcaption>
+      </figure>
+    </section>
 
-  <section id="results">
-    <h2>Results</h2>
-    <table>
-      <thead>
-        <tr><th>Setting</th><th>TPT</th><th>C-TPT</th><th>O-TPT (ours)</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>Fine-grained ECE</td><td>12.00%</td><td>5.13%</td><td><strong>4.21%</strong></td></tr>
-        <tr><td>ImageNet-A ECE</td><td>12.00%</td><td>5.82%</td><td><strong>4.88%</strong></td></tr>
-      </tbody>
-    </table>
-  </section>
+    <!-- Reliability Plots -->
+    <section id="reliability">
+      <h2>Reliability Diagrams</h2>
+      <p>
+        O-TPT corrects over-confidence on ImageNet-A, Aircraft, UCF101, SUN397:
+      </p>
+      <ul>
+        <li>
+          <strong>CLIP ViT-B/16:</strong> Fig. 8 compares C-TPT vs. O-TPT reliability :contentReference[oaicite:14]{index=14}.
+        </li>
+        <li>
+          <strong>CLIP RN-50:</strong> Fig. 9 shows similar gains :contentReference[oaicite:15]{index=15}.
+        </li>
+      </ul>
+    </section>
 
-  <section id="resources">
-    <h2>Resources</h2>
-    <ul>
-      <li><a href="https://arxiv.org/abs/...">Paper (arXiv)</a></li>
-      <li><a href="https://github.com/your-repo/otpt">Code on GitHub</a></li>
-    </ul>
-  </section>
+    <!-- Resources -->
+    <section id="resources">
+      <h2>Resources</h2>
+      <ul>
+        <li><a href="https://openaccess.thecvf.com/content/CVPR2025/papers/Sharifdeen_O-TPT_Orthogonality_Constraints_for_Calibrating_Test-time_Prompt_Tuning_in_Vision-Language_CVPR_2025_paper.pdf" target="_blank">Full paper (CVPR ’25)</a></li>
+        <li><a href="https://github.com/ashshaksharifdeen/O-TPT" target="_blank">GitHub: code & experiments</a></li>
+        <li><a href="https://docs.google.com/presentation/d/1aRIgcdLnAUOojj45v39bugMX2F2aYLpY/edit" target="_blank">Slides & demo video</a></li>
+      </ul>
+    </section>
+  </main>
 
   <footer>
-    <p>© 2025 Your Name</p>
+    <p>© 2025 Ashshak Sharifdeen et al.</p>
   </footer>
 </body>
 </html>
