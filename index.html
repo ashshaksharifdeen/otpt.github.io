@@ -58,7 +58,7 @@
     
   <!-- Video demo -->
   <section id="video">
-    <h2>Overview Video</h2>
+    
     <div class="video-container">
       <iframe
         src="https://www.youtube.com/embed/zBh-tCqpGUE"
@@ -71,10 +71,33 @@
 
     <!-- Overview -->
     <section id="overview">
-      <h2>Overview</h2>
+      <h2>Abstract</h2>
       <p>
-        Test-time prompt tuning (TPT) can boost CLIP-style models’ accuracy on new tasks without labels, but often at the cost of over-confident, mis-calibrated predictions.
-        O-TPT introduces an orthogonality regularizer on class-prompt embeddings, enforcing them to span the unit hypersphere with low cosine similarity—improving calibration across benchmarks.
+        Test-time prompt tuning for vision-language models
+ (VLMs) is getting attention because of their ability to learn
+ with unlabeled data without fine-tuning. Although test
+time prompt tuning methods for VLMs can boost accuracy,
+ the resulting models tend to demonstrate poor calibration,
+ which casts doubts on the reliability and trustworthiness
+ of these models. Notably, more attention needs to be de
+voted to calibrating the test-time prompt tuning in vision
+language models. To this end, we propose a new approach,
+ called O-TPT that introduces orthogonality constraints on
+ the textual features corresponding to the learnable prompts
+ for calibrating test-time prompt tuning in VLMs. Towards
+ introducing orthogonality constraints, we make the follow
+ing contributions. First, we uncover new insights behind the
+ suboptimal calibration performance of existing methods re
+lying on textual feature dispersion. Second, we show that
+ imposing a simple orthogonalization of textual features is a
+ more effective approach towards obtaining textual disper
+sion. We conduct extensive experiments on various datasets
+ with different backbones and baselines. The results indi
+cate that our method consistently outperforms the prior
+ state of the art in significantly reducing the overall aver
+age calibration error. Also, our method surpasses the zero
+shot calibration performance on fine-grained classification
+ tasks
       </p>
     </section>
 
@@ -82,20 +105,9 @@
 
     <!-- Key Contributions with Fig.1 -->
    <section id="contributions">
-  <h2>Key Contributions</h2>
   <ol>
-    <li>
-      <strong>Orthogonal Prompt Regularizer:</strong>
-      Add ∥E Eᵀ − I∥₂² to the TPT loss to enforce angular separation among text prompts.
-    </li>
-    <li>
-      <strong>Comprehensive Evaluation:</strong>
-      11 datasets (ImageNet, fine-grained, OOD variants), CLIP ViT-B/16 & RN50 backbones.
-    </li>
-    <li>
-      <strong>SOTA Calibration:</strong>
-      O-TPT achieves 4.21% ECE vs. 5.13% (C-TPT) and 12.0% (TPT) on fine-grained tasks.
-      <figure>
+    <li> 
+     <figure>
         <img src="assets/images/radar_plot_3.png" alt="ECE comparison plot">
         <figcaption>Fig.1: ECE vs. baselines</figcaption>
       </figure>
@@ -105,49 +117,97 @@
 
     <!-- Methodology with Fig.3 -->
     <section id="methodology">
-      <h2>Methodology</h2>
+      <h2>Orthogonality Constraint</h2>
       <p>
-        Let <code>E∈ℝ^{C×D}</code> be the matrix of class-prompt embeddings. We optimize:
+         textual
+ features with lower cosine similarity (i.e., greater angular
+ separation) between them lead to an improved calibration,
+ as indicated by a lower Expected Calibration Error (ECE)
+  Armed with this insight, we propose to impose
+ orthogonalization constraints on the textual features by en
+forcing the angular distance between them. As such, this
+ allows us to effectively utilize the feature space. Due to
+ improved text feature separation.
       </p>
-      <pre><code>
-minₜ L_{TPT}(t) + λ · ∥E Eᵀ − I_C∥₂²
-      </code></pre>
-      <p>where L_{TPT} is the entropy-minimization loss of TPT.</p>
       <figure>
-        <img src="assets/images/CTPT_vs_ours_diag.png" alt="Orthogonal vs. dispersion comparison">
-        <figcaption>Fig. 3: Orthogonal vs. L₂-dispersion (C-TPT) :contentReference[oaicite:12]{index=12}</figcaption>
+        <img src="assets/images/stacked_cosine_similarity_pdfs_caltech101_new.png" alt="cosiine simililarity">
+        
       </figure>
     </section>
+
+      <section id="Feature-space utilization">
+      <h2> Comparison of angular optimization</h2>
+      <p>
+       Interestingly, C-TPT, which applies dispersion
+ in the L2 space, also struggles to calibrate, showing higher
+ cosine similarities in cases where TPT fails (these challeng
+ing points), as illustrated in Fig. 3. In contrast, our method’s
+ orthogonalization constraint consistently produces text fea
+tures with much lower and more consistent cosine similari
+ties compared to CLIP initialization, resulting in better cali
+bration overall. Our orthogonalization method enforces an
+gular distance between feature pairs, fully utilizing the hy
+perspherical space (Fig. 3). As such, promoting orthogo
+nality enhances feature separation, leading to distinct class
+ boundaries and improved calibration.
+      </p>
+      <figure>
+        <img src="assets/images/CTPT_vs_ours_diag.png" alt=" Comparison of angular optimization (ours) and ATFD
+ optimization ">
+        
+      </figure>
+    </section>  
 
     <!-- Results with Fig.5 -->
-    <section id="results">
-      <h2>Results</h2>
+    <section id="ComparisonofcalibrationperformancewithCLIP-ViTB/16backbone">
+      <h2>Comparison of calibration performance with CLIP-ViTB/16 backbone</h2>
       <p>
-        Across fine-grained datasets, O-TPT consistently lowers ECE without sacrificing accuracy:
+        Using the CLIP-B/16 backbone, our method achieves an
+ average ECE of 4.21, outperforming C-TPT at 5.13 and
+ Robust Adapt’s best result of 4.66.
       </p>
       <figure>
-        <img src="assets/images/various-method2.png" alt="Fine-grained datasets ECE">
-        <figcaption>Fig. 5: ECE across fine-grained tasks (average) :contentReference[oaicite:13]{index=13}</figcaption>
+        <img src="assets/images/clipvit16.png" alt="CLIP-ViTB/16 backbone">
+        
       </figure>
     </section>
 
-    <!-- Reliability Plots -->
+        <!-- Results with Fig.5 -->
+    <section id="ComparisonofcalibrationperformancewithCLIP-RN50backbone">
+      <h2>Comparison of calibration performance with CLIP-RN50 backbone</h2>
+      <p>
+        When applied to the
+ CLIP-RN50 backbone, our approach reduces ECE to 5.45,
+ a substantial improvement over the 6.19 ECE achieved by
+ C-TPT. Notably, our method also surpasses the zero-shot
+ calibration performance showing lower ECE on both back
+bones
+      </p>
+      <figure>
+        <img src="assets/images/CLIP-RN50.png" alt="ComparisonofcalibrationperformancewithCLIP-RN50backbone">
+       
+      </figure>
+    </section>
+
+        <!-- Results with Fig.5
     <section id="reliability">
       <h2>Reliability Diagrams</h2>
       <p>
-        O-TPT corrects over-confidence on ImageNet-A, Aircraft, UCF101, SUN397:
+         Reliability diagrams display the result for CLIP-ViT-B/16 on the
+ Food, Flower, and DTD datasets.  In Fig.a, C-TPT
+ shows under confidence for the Food dataset, which is rec
+tified withour O-TPT calibration method, as shown in
+ Fig.d.Additionally,ourmethod better addresses overcon
+fidenc eissues, as illustrated in Fig.e and f,when com
+pared to Fig.b and c,respectively.
       </p>
-      <ul>
-        <li>
-          <strong>CLIP ViT-B/16:</strong> Fig. 8 compares C-TPT vs. O-TPT reliability :contentReference[oaicite:14]{index=14}.
-        </li>
-        <li>
-          <strong>CLIP RN-50:</strong> Fig. 9 shows similar gains :contentReference[oaicite:15]{index=15}.
-        </li>
-      </ul>
-    </section>
+      <figure>
+        <img src="assets/images/Reliability.png" alt="reliabilitydai">
+        
+      </figure>
+    </section>  -->
 
-    <!-- Resources -->
+    <!-- Resources 
     <section id="resources">
       <h2>Resources</h2>
       <ul>
@@ -155,11 +215,32 @@ minₜ L_{TPT}(t) + λ · ∥E Eᵀ − I_C∥₂²
         <li><a href="https://github.com/ashshaksharifdeen/O-TPT" target="_blank">GitHub: code & experiments</a></li>
         <li><a href="https://docs.google.com/presentation/d/1aRIgcdLnAUOojj45v39bugMX2F2aYLpY/edit" target="_blank">Slides & demo video</a></li>
       </ul>
-    </section>
+    </section> -->
+
+     <section id="bibtex">
+    <h2>BibTeX</h2>
+    <p>If you like our work, please consider citing us.</p>
+    <div class="code-block">
+      <pre><code>
+@misc{sharifdeen2025otptorthogonalityconstraintscalibrating,
+  title={O-TPT: Orthogonality Constraints for Calibrating Test-time Prompt Tuning in Vision-Language Models},
+  author={Ashshak Sharifdeen and Muhammad Akhtar Munir and Sanoojan Baliah and Salman Khan and Muhammad Haris Khan},
+  year={2025},
+  eprint={2503.12096},
+  archivePrefix={arXiv},
+  primaryClass={cs.CV},
+  url={https://arxiv.org/abs/2503.12096},
+}
+      </code></pre>
+    </div>
+  </section> 
   </main>
 
   <footer>
-    <p>© 2025 Ashshak Sharifdeen et al.</p>
+    <p>
+      <strong>otpt</strong> is maintained by
+      <a href="https://github.com/ashshaksharifdeen" target="_blank">ashshak sharifdeen</a>.
+    </p>
   </footer>
 </body>
 </html>
