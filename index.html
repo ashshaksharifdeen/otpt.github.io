@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>O-TPT: Orthogonality-Constrained TPT</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header>
+    <h1>O-TPT</h1>
+    <p><em>Orthogonality Constraints for Calibrating Test-time Prompt Tuning in Vision-Language Models</em></p>
+  </header>
+
+  <section id="video">
+    <h2>Overview Video</h2>
+    <div class="video-container">
+      <iframe
+        src="https://www.youtube.com/embed/zBh-tCqpGUE"
+        frameborder="0" allowfullscreen>
+      </iframe>
+    </div>
+  </section>
+
+  <section id="overview">
+    <h2>Project Overview</h2>
+    <p>
+      Vision-language models suffer from mis-calibration when you fine-tune prompts at test time.
+      O-TPT enforces mutual orthogonality among class-prompt embeddings, yielding both high accuracy
+      and well-calibrated confidences.
+    </p>
+  </section>
+
+  <section id="authors">
+    <h2>Authors & Affiliations</h2>
+    <ul>
+      <li>Your Name, University of Colombo</li>
+      <li>Co-author A, Affiliation</li>
+      <!-- add others as needed -->
+    </ul>
+  </section>
+
+  <section id="contributions">
+    <h2>Key Contributions</h2>
+    <ol>
+      <li>
+        <strong>Orthogonality Regularization:</strong>
+        Add a term <code>∥E Eᵀ−I∥₂²</code> to the prompt-tuning loss to enforce angular separation.
+      </li>
+      <li>
+        <strong>Comprehensive Benchmarks:</strong>
+        Evaluate on 11 datasets (ImageNet, Fine-grained, OOD variants) with CLIP ViT-B/16 & RN50.
+      </li>
+      <li>
+        <strong>State-of-the-Art Calibration:</strong>
+        Achieve 4.21% ECE (vs. 5.13% C-TPT, 12.0% TPT) without sacrificing accuracy.
+      </li>
+    </ol>
+  </section>
+
+  <section id="methodology">
+    <h2>Methodology</h2>
+    <p>
+      Let <code>E∈ℝ^{C×D}</code> be your matrix of class-prompt embeddings.  We optimize:
+    </p>
+    <pre><code>
+minₜ Lₜₚₜ + λ ⋅ ∥E Eᵀ − I_C∥₂²
+    </code></pre>
+    <p>…where <code>Lₜₚₜ</code> is the standard test-time prompt-tuning loss.</p>
+  </section>
+
+  <section id="results">
+    <h2>Results</h2>
+    <table>
+      <thead>
+        <tr><th>Setting</th><th>TPT</th><th>C-TPT</th><th>O-TPT (ours)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Fine-grained ECE</td><td>12.00%</td><td>5.13%</td><td><strong>4.21%</strong></td></tr>
+        <tr><td>ImageNet-A ECE</td><td>12.00%</td><td>5.82%</td><td><strong>4.88%</strong></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="resources">
+    <h2>Resources</h2>
+    <ul>
+      <li><a href="https://arxiv.org/abs/...">Paper (arXiv)</a></li>
+      <li><a href="https://github.com/your-repo/otpt">Code on GitHub</a></li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>© 2025 Your Name</p>
+  </footer>
+</body>
+</html>
