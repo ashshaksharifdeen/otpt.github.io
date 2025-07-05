@@ -4,8 +4,11 @@ body { font-family:Segoe UI, sans-serif; line-height:1.6; color:#333; }
 
 /* Hero header */
 .hero {
-  /* Deep violet to vibrant magenta */
-  background: linear-gradient(135deg, #7928CA 0%, #FF0080 100%);
+  /* Classic tech-blue gradient */
+  background: linear-gradient(135deg,
+    #1E3C72 0%,   /* deep navy-blue */
+    #2A5298 100%  /* soft royal-blue */
+  );
   color: #fff;
   padding: 4rem 1rem;
   text-align: center;
