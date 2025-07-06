@@ -4,7 +4,11 @@ body { font-family:Segoe UI, sans-serif; line-height:1.6; color:#333; }
 
 /* Hero header */
 .hero {
-  background: linear-gradient(135deg, #0d0d0d 0%, #3d3d3d 100%);
+  /* Slate Blue → Mint Green */
+  background: linear-gradient(135deg,
+    #6A5ACD 0%,    /* Slate Blue */
+    #3EB489 100%   /* Mint Green */
+  );
   color: #fff;
   padding: 4rem 1rem;
   text-align: center;
