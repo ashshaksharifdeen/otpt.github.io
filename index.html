@@ -96,31 +96,16 @@
     <section id="overview">
       <h2>Abstract</h2>
       <p>
-        Test-time prompt tuning for vision-language models
- (VLMs) is getting attention because of their ability to learn
- with unlabeled data without fine-tuning. Although test
-time prompt tuning methods for VLMs can boost accuracy,
- the resulting models tend to demonstrate poor calibration,
- which casts doubts on the reliability and trustworthiness
- of these models. Notably, more attention needs to be de
-voted to calibrating the test-time prompt tuning in vision
-language models. To this end, we propose a new approach,
- called O-TPT that introduces orthogonality constraints on
- the textual features corresponding to the learnable prompts
- for calibrating test-time prompt tuning in VLMs. Towards
- introducing orthogonality constraints, we make the follow
-ing contributions. First, we uncover new insights behind the
- suboptimal calibration performance of existing methods re
-lying on textual feature dispersion. Second, we show that
- imposing a simple orthogonalization of textual features is a
- more effective approach towards obtaining textual disper
-sion. We conduct extensive experiments on various datasets
- with different backbones and baselines. The results indi
-cate that our method consistently outperforms the prior
- state of the art in significantly reducing the overall aver
-age calibration error. Also, our method surpasses the zero
-shot calibration performance on fine-grained classification
- tasks
+        Test-time prompt tuning for vision-language models(VLMs) is getting attention because of their ability to learn
+ with unlabeled data without fine-tuning. Although test-time prompt tuning methods for VLMs can boost accuracy,
+ the resulting models tend to demonstrate poor calibration, which casts doubts on the reliability and trustworthiness
+ of these models. Notably, more attention needs to be devoted to calibrating the test-time prompt tuning in vision language models. 
+ To this end, we propose a new approach, called O-TPT that introduces orthogonality constraints on the textual features corresponding to the learnable prompts
+ for calibrating test-time prompt tuning in VLMs. Towards introducing orthogonality constraints, we make the following contributions. 
+ First, we uncover new insights behind the suboptimal calibration performance of existing methods relying on textual feature dispersion. Second, we show that
+ imposing a simple orthogonalization of textual features is a more effective approach towards obtaining textual dispersion. 
+ We conduct extensive experiments on various datasets with different backbones and baselines. The results indicate that our method consistently outperforms the prior state of the art in significantly reducing the overall average calibration error. 
+ Also, our method surpasses the zero shot calibration performance on fine-grained classification tasks
       </p>
     </section>
 
@@ -132,7 +117,7 @@ shot calibration performance on fine-grained classification
     <li> 
      <figure>
         <img src="assets/images/radar_plot_3.png" alt="ECE comparison plot">
-        <figcaption>Fig.1: ECE vs. baselines</figcaption>
+        
       </figure>
     </li>
   </ol>
@@ -142,12 +127,8 @@ shot calibration performance on fine-grained classification
     <section id="methodology">
       <h2>Orthogonality Constraint</h2>
       <p>
-         textual
- features with lower cosine similarity (i.e., greater angular
- separation) between them lead to an improved calibration,
- as indicated by a lower Expected Calibration Error (ECE)
-  Armed with this insight, we propose to impose
- orthogonalization constraints on the textual features by en
+         textual features with lower cosine similarity (i.e., greater angular separation) between them lead to an improved calibration, as indicated by a lower Expected Calibration Error (ECE)
+  Armed with this insight, we propose to impose orthogonalization constraints on the textual features by en
 forcing the angular distance between them. As such, this
  allows us to effectively utilize the feature space. Due to
  improved text feature separation.
@@ -162,17 +143,10 @@ forcing the angular distance between them. As such, this
       <h2> Comparison of angular optimization</h2>
       <p>
        Interestingly, C-TPT, which applies dispersion
- in the L2 space, also struggles to calibrate, showing higher
- cosine similarities in cases where TPT fails (these challeng
-ing points), as illustrated in Fig. 3. In contrast, our method’s
- orthogonalization constraint consistently produces text fea
-tures with much lower and more consistent cosine similari
-ties compared to CLIP initialization, resulting in better cali
-bration overall. Our orthogonalization method enforces an
-gular distance between feature pairs, fully utilizing the hy
-perspherical space (Fig. 3). As such, promoting orthogo
-nality enhances feature separation, leading to distinct class
- boundaries and improved calibration.
+ in the L2 space, also struggles to calibrate, showing higher cosine similarities in cases where TPT fails (these challenging points), as illustrated in Fig. In contrast, our method’s
+orthogonalization constraint consistently produces text features with much lower and more consistent cosine similarities compared to CLIP initialization, resulting in better cali
+bration overall. Our orthogonalization method enforces angular distance between feature pairs, fully utilizing the hyperspherical space. As such, promoting orthogo
+nality enhances feature separation, leading to distinct class boundaries and improved calibration.
       </p>
       <figure>
         <img src="assets/images/CTPT_vs_ours_diag.png" alt=" Comparison of angular optimization (ours) and ATFD
