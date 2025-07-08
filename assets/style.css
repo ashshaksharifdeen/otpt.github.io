@@ -75,8 +75,8 @@ body { font-family:Segoe UI, sans-serif; line-height:1.6; color:#333; }
 }
 .affiliations {
   font-size: 0.9rem;
-  color: #E0E0E0;  /* Light gray for better visibility */
-  opacity: 0.9;    /* Slightly transparent for a subtle effect */
+  color: #F5F5F5;  /* Brighter light gray for better visibility */
+  opacity: 1;      /* No transparency for full contrast */
   margin-bottom: 1.5rem;
 }
 
